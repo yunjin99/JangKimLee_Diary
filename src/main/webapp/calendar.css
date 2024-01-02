@@ -18,7 +18,7 @@
 }
 
 .custom_calendar_table thead.cal_week th {
-    background-color: #288CFF;
+    background-color: #B0E0E6;
     color: #fff;
 }
 
@@ -35,6 +35,6 @@
 }
 
 .custom_calendar_table tbody td.select_day {
-    background-color: #288CFF;
+    background-color: #B0E0E6;
     color: #fff;
 }
