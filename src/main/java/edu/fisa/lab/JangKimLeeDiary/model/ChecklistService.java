@@ -1,8 +1,6 @@
 package edu.fisa.lab.JangKimLeeDiary.model;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,19 +22,14 @@ public class ChecklistService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	// check date 값으로 해당 날짜의 checklist 정보 검색 service
-	// entity -> dto로 변환
-//	public CheckDTO getCheck(int Checkdate) throws Exception {
-//		Optional<Checklist> checkEntity = Checklist.findByDate(Checkdate);
-//
-//		if (checkEntity.get() == null) {
-//			throw new NotExistException("검색하는 재능 기부자가 미 존재합니다.");
-//		}
-//
-//		CheckDTO checklist = mapper.map(Checklist.get(), CheckDTO.class);
-//
-//		return checklist;
-//	}
+//	check date 값으로 해당 날짜의 checklist 정보 검색 service
+//	entity -> dto로 변환
+	
+	public List<ChecklistDTO> getChecklistbyDate(String checkdate) throws Exception {
+		List<Checklist> checkEntity = ChecklistDAO.findByDate(checkdate);
+		List<ChecklistDTO> checklist = Arrays.asList(mapper.map(checkEntity, ChecklistDTO[].class));
+		return checklist;
+	}
 
 
 	public List<ChecklistDTO> getAllChecklist() throws SQLException, NotExistException {

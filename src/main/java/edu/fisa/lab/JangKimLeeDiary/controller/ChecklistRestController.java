@@ -25,13 +25,13 @@ public class ChecklistRestController {
 	}
 	
 
-//	@GetMapping("/checklistByDate")
-//	public ChecklistDTO checklist(@RequestParam("date") String checkDate) throws Exception {
-//		return checklistService.getChecklistbyDate(checkDate);
-//	}
+	@GetMapping("/checklistByDate")
+	public List<ChecklistDTO> checklist(@RequestParam("date") String checkDate) throws Exception {
+		return checklistService.getChecklistbyDate(checkDate);
+	}
 
 	@PostMapping("/checklistInsert")
-	protected String checklistInsert(@RequestBody ChecklistDTO checklist) throws Exception {
+	protected String checklistInsert(ChecklistDTO checklist) throws Exception {
 		boolean result = checklistService.addChecklist(checklist);
 		return result ? "체크리스트 추가 완료" : "추가실패";
 	}
