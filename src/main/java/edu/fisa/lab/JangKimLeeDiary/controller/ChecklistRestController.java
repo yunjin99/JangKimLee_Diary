@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.fisa.lab.JangKimLeeDiary.model.ChecklistService;
@@ -22,16 +24,15 @@ public class ChecklistRestController {
 		return checklistService.getAllChecklist();
 	}
 	
-//
+
 //	@GetMapping("/checklistByDate")
-//	public ChecklistDTO checklist(@RequestParam("date") String activistId) throws Exception {
-//		return ChecklistService.getChecklist(checkdate);
+//	public ChecklistDTO checklist(@RequestParam("date") String checkDate) throws Exception {
+//		return checklistService.getChecklistbyDate(checkDate);
 //	}
 
 	@PostMapping("/checklistInsert")
-	protected String checklistInsert(ChecklistDTO checklist) throws Exception {
+	protected String checklistInsert(@RequestBody ChecklistDTO checklist) throws Exception {
 		boolean result = checklistService.addChecklist(checklist);
 		return result ? "체크리스트 추가 완료" : "추가실패";
 	}
-
 }

@@ -1,9 +1,10 @@
 package edu.fisa.lab.JangKimLeeDiary.model;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ChecklistService {
 	public List<ChecklistDTO> getAllChecklist() throws SQLException, NotExistException {
 		List<Checklist> ChecklistAll = ChecklistDAO.findAll();
 
-		if (ChecklistAll == null) {
+		if (ChecklistAll == null || ChecklistAll.isEmpty()) {
 			throw new NotExistException("검색하는 체크리스트가 없습니다.");
 		}
 
@@ -49,7 +50,7 @@ public class ChecklistService {
 
 		return ChecklistDTOAll;
 	}
-
+	
 	public void notExistChecklist(Integer ChecklistId) throws Exception {
 
 		boolean result = ChecklistDAO.existsById(ChecklistId);
@@ -87,4 +88,6 @@ public class ChecklistService {
 		
 		return true;
 	}
+
+	
 }
