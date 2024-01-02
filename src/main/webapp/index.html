@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>재능 기부</title>
+</head>
+
+<style>
+	.waviy {
+		position: relative;
+		-webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
+		font-size: 30px;
+		width: 300px;
+		height: 18px;
+		padding: 20px 20px;
+		text-align: center;
+	}
+	
+	.waviy span {
+		font-family: Impact;
+		position: relative;
+		display: inline-block;
+		color: rgb(0, 0, 0);
+		text-transform: uppercase;
+		animation: waviy 1s infinite;
+		animation-delay: calc(.1s * var(--i));
+	}
+	
+	@keyframes waviy {
+		0%,40%,100% {
+			transform: translateY(0)
+		}
+		20% {
+			transform: translateY(-20px)
+		}
+	}
+	
+	
+</style>
+
+<body>
+	<div class="waviy">
+         <span style="--i:1">F</span>
+         <span style="--i:2">I</span>
+         <span style="--i:3">S</span>
+         <span style="--i:4">A</span>  
+    </div>
+	<br><br><br>
+
+	<h3>재능 기부의 모든 정보 검색하기</h3>
+	<hr>
+	
+	*** 선택한 기부자 정보 보기 *** <br>
+	<div id = "activistOneView"></div>
+	
+	<hr>
+	<a href="#" onclick="allProbonoProjectView()">1. 진행중인 Probono Project 모두 검색</a><p>
+	<div id = "projectAllView"></div>
+
+	
+	<br><hr><br>
+	<a href="#" onclick="allActivistView()">2. 재능 기부 프로젝트에 참여중인 기부자 모두 검색</a><p>	
+	<div id = "allActivistView"></div>
+
+
+	<br><hr><br>
+	<!-- 재능 기부자 가입하기 -->
+	<button onclick="insertUI()">3. 재능 기부자 가입하기</button><p>
+	<div id='insertUiView'></div>
+	
+	<br><hr><br>
+	<!-- 재능 기부자 가입하기 -->
+	<a href="activistAllView">
+		4. 동기 방식(웹페이지 이동)으로 모든 기부자 검색
+	</a>
+	<br>
+	
+	
+	<script>
+		//1. 진행중인 Probono Project 모두 검색
+		function allProbonoProjectView(){
+			
+			const xhttp = new XMLHttpRequest();
+			xhttp.onload = function() {
+				let data = JSON.parse(this.responseText);
+				
+				let tableElement =`
+					<table border="1">
+					<tr>   
+						<th>프로젝트 id</th><th>프로젝트명</th><th>재능기부자 id</th>
+						<th>재능 수혜자  id</th><th>재능기부 내용</th>
+					</tr>`;
+				
+				for (let i in data){
+					tableElement = tableElement + `<tr>
+				 		<td>${data[i].probonoProjectId}</td>
+				 		<td>${data[i].probonoProjectName}</td>
+				 	
+				 		<td><a href="#" onclick = "activistOneView('${data[i].activistId}')">
+				 			${data[i].activistId}
+				 		</a></td>
+				 		<td>${data[i].receiveId}</td>
+				 		<td>${data[i].projectContent}</td>
+				    </tr>`;
+				}
+				
+				tableElement = tableElement + `</table>`;
+				document.getElementById("projectAllView").innerHTML = tableElement;
+			};
+			xhttp.open( "GET", "probonoProjectAll");
+			xhttp.send();
+		}
+
+
+		//2. 재능 기부 프로젝트에 참여중인 기부자 모두 검색
+		function allActivistView(){
+			
+			const xhttp = new XMLHttpRequest();
+			xhttp.onload = function() {
+				let data = JSON.parse(this.responseText);
+				
+				let tableElement =`
+					<table border="1">
+					<tr><th>activist_id</th><th>name</th><th>major</th></tr>`;
+					
+					for (let i in data){
+						tableElement = tableElement + `<tr>
+					 		<td><a href="#" onclick = "activistOneView('${data[i].id}')">${data[i].id}</a></td>
+					 		<td>${data[i].name}</td>
+					 		<td>${data[i].major}</td>
+					    </tr>`;
+					}
+					
+					tableElement = tableElement + `</table>`;
+				document.getElementById("allActivistView").innerHTML = tableElement;
+			};
+			xhttp.open("GET", "activistAll");
+			xhttp.send();
+		}		
+			
+		
+		//3. 재능 기부자 가입하기
+		function insertUI(){
+			let insertUI = `
+				<table border="1">
+					<tr>
+						<td>id</td><td><input type="text" id="id"></td>
+					</tr>
+					<tr>
+				 		<td>name</td><td><input type="text" id="name"></td>
+					</tr>
+					<tr>	
+						<td>pw</td><td><input type="password" id="password"></td>
+				 	</tr>
+				 	<tr>
+				 		<td>major</td><td><input type="text" id="major"></td>
+				 	</tr>
+				 	<tr>
+				 		<td colspan="2">
+				 			<button onclick="activistInsert()"/>가입</button>
+				 			<input type="reset" value="취소">
+				 		</td>
+				 	</tr>
+				</table>`;
+				
+			document.getElementById("insertUiView").innerHTML = insertUI;
+		}//end of insertUI()
+
+
+		//3. 재능 기부자 가입하기 클릭시 HTML에 동적으로 그려지는 html에서 호출하는 js 함수
+		function activistInsert(){
+			let insertQueryString = `id=${document.getElementById("id").value}&name=${document.getElementById("name").value}&password=${document.getElementById("password").value}&major=${document.getElementById("major").value}`;
+	
+			const xhttp = new XMLHttpRequest();		
+			xhttp.onload = function() {			
+				alert(this.responseText);
+			};
+			
+			xhttp.open("POST", "activistInsert");
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(insertQueryString);
+		}
+	
+	
+	//기부자 한명 정보 검색시 호출되는 함수
+	function activistOneView(v){		
+		const xhttp = new XMLHttpRequest();		
+		xhttp.onload = function() {			
+			let data = JSON.parse(this.responseText);
+			
+			let tableElement =`
+				선택한 기부자 정보 <br>	
+				<table border="1">
+					<tr><th>activist_id</th><th>name</th><th>major</th></tr>
+					<tr>
+						<td>${data.id}</td>
+				 		<td>${data.name}</td>
+				 		<td>${data.major}</td>
+			 		</tr>
+				</table>`;
+
+			document.getElementById("activistOneView").innerHTML = tableElement;
+		};
+		
+		xhttp.open( "GET", "activist?id="+v);
+		xhttp.send();
+	}	
+	
+	</script>
+</body>
+</html>
