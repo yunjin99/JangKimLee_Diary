@@ -32,13 +32,13 @@ public class ChecklistRestController {
 	}
 
 	@PostMapping("/insertChecklist")
-	protected String checklistInsert(ChecklistDTO checklist) throws Exception {
+	protected String insertChecklist(ChecklistDTO checklist) throws Exception {
 		boolean result = checklistService.addChecklist(checklist);
 		return result ? "체크리스트 추가 완료" : "추가실패";
 	}
 	
 	@DeleteMapping("/deleteChecklist")
-	public boolean memoDelete(int id) throws Exception{
+	public boolean deleteChecklist(int id) throws Exception{
 		return checklistService.deleteChecklist(id);
 	}
 }
