@@ -27,7 +27,7 @@ public class Memo {
 
 	@Id
 	@Column(name = "memo_id")
-	private String memoId;
+	private int memoId;
 
 	@Nonnull
 	@Column(name = "memo_date")

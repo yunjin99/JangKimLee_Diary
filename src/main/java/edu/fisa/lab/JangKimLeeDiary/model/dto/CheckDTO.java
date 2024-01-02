@@ -22,7 +22,7 @@ import lombok.Setter;
 @Builder
 public class CheckDTO {
 
-	private String checkId;
+	private int checkId;
 	private Date checkDate;
 	private String checkContents;
 	private boolean checkStatus;

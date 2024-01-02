@@ -25,7 +25,7 @@ public class Checklist {
 
 	@Id
 	@Column(name = "check_id")
-	private String checkId;
+	private int checkId;
 
 	@Nonnull
 	@Column(name = "check_date")

@@ -20,7 +20,7 @@ import lombok.ToString;
 @Builder
 public class MemoDTO {
 
-	private String memoId;
+	private int memoId;
 	private Date memoDate;
 	private String memoContents;
 
