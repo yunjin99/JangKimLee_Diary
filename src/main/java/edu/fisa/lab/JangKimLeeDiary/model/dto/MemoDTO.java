@@ -21,7 +21,7 @@ import lombok.ToString;
 public class MemoDTO {
 
 	private int memoId;
-	private Date memoDate;
+	private String memoDate;
 	private String memoContents;
 
 	public Memo toEntity() {

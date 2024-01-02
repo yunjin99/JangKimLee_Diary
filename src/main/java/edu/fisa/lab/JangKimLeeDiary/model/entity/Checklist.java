@@ -29,7 +29,7 @@ public class Checklist {
 
 	@Nonnull
 	@Column(name = "check_date")
-	private Date checkDate;
+	private String checkDate;
 	
 	@Nonnull
 	@Column(name = "check_status")
