@@ -23,12 +23,10 @@ public class MemoRestController {
 		return memoService.getAllMemo();
 	}
 
-//	//한명의 기부자 검색
-//	//activist?id=v
-//	@GetMapping("/activist")
-//	public ActivistDTO activist(@RequestParam("id") String activistId) throws Exception {
-//		return probonoService.getActivist(activistId); //json 포멧으로 client의 js 요청 영역으로 출력
-//	}
+	@GetMapping("/memoFindByDate")
+	public List<MemoDTO> activist(@RequestParam("date") String date) throws Exception {
+		return memoService.getFindByDate(date); //json 포멧으로 client의 js 요청 영역으로 출력
+	}
 
 	@PostMapping("/memoInsert")
 	protected boolean activistInsert(MemoDTO memo) throws Exception {

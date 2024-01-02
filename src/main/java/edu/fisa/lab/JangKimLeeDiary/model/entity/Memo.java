@@ -31,7 +31,7 @@ public class Memo {
 
 	@Nonnull
 	@Column(name = "memo_date")
-	private Date memoDate;
+	private String memoDate;
 
 	@Nonnull
 	@Column(name = "memo_contents")

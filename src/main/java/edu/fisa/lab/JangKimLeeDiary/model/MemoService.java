@@ -12,7 +12,6 @@ import edu.fisa.lab.JangKimLeeDiary.exception.NotExistException;
 import edu.fisa.lab.JangKimLeeDiary.model.dto.MemoDTO;
 import edu.fisa.lab.JangKimLeeDiary.model.entity.Memo;
 
-
 @Service
 public class MemoService {
 
@@ -21,19 +20,14 @@ public class MemoService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-//	// 메모 날짜로 검색 service
-//	// entity -> dto로 변환
-//	public MemoDTO getActivist(int memoId) throws Exception {
-//		Optional<Memo> memoEntity = memoDAO.findById(memoId);
-//
-//		if (memoEntity.get() == null) {
-//			throw new NotExistException("검색하는 재능 기부자가 미 존재합니다.");
-//		}
-//
-//		MemoDTO memo = mapper.map(memoEntity.get(), MemoDTO.class);
-//
-//		return memo;
-//	}
+	// 메모 날짜로 검색 service
+	public List<MemoDTO> getFindByDate(String date) throws Exception {
+		List<Memo> memoEntity = memoDAO.memoByDate(date);
+
+		List<MemoDTO> memo = Arrays.asList(mapper.map(memoEntity, MemoDTO[].class));
+
+		return memo;
+	}
 
 	/*
 	 * 모든 프로젝트 검색 entity와 dto 분리 필수 - ModelMapper 로 entity와 dto 호환
@@ -41,9 +35,9 @@ public class MemoService {
 	public List<MemoDTO> getAllMemo() throws Exception {
 		List<Memo> memoAll = memoDAO.findAll();
 
-//		if (memoAll == null) {
-//			throw new NotExistException("메모가 존재하지 않습니다");
-//		}
+		if (memoAll == null) {
+			throw new NotExistException("메모가 존재하지 않습니다");
+		}
 		List<MemoDTO> memoDTOAll = Arrays.asList(mapper.map(memoAll, MemoDTO[].class));
 		return memoDTOAll;
 	}
@@ -58,8 +52,30 @@ public class MemoService {
 		return true;
 	}
 
+//	/*
+//	 * 존재하는 데이터의 컬럼값만 변경(update) - Spring Data jpa - sql관점에서 영구 저장 및 복원 = 트렌잭션 처리로
+//	 * 표현 : tx 가 transaction의 약어
+//	 * 
+//	 * @Transactional - @Modifying @Query 로 사용자 정의로 개발된 delete or update 메소드들 호출하는
+//	 * service 메소드에 필수 - commit과 rollback 처리하는 AOP
+//	 */
+//	// update, delete는 tx 설정 필수
+//	@Transactional
+//	// 재능 기부자 수정 메소드[ActivistDAO의 updateActivist()]
+//	public boolean updateActivist(String activistId, String major) throws Exception {
+//
+//		notExistActivist(activistId);
+//
+//		// 업데이트 적용한 row 수 반환
+//		int result = activistDAO.updateActivistByIdMajor(activistId, major);
+//
+//		if (result == 0) {
+//			throw new NotExistException("재능 기부자 정보 갱신 실패");
+//		}
+//		return true;
+//	}
 
-	// memo 삭제 메소드
+	// 재능 기부자 삭제 메소드[ ActivistDAO.deleteActivist()]
 	public boolean deleteMemo(int memoId) throws Exception {
 //		notExistActivist(memoId);
 		memoDAO.deleteById(memoId);

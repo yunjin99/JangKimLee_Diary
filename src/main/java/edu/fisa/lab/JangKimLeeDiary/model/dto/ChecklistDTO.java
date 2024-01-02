@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ChecklistDTO {
 
 	private int checkId;
-	private Date checkDate;
+	private String checkDate;
 	private String checkContents;
 	private boolean checkStatus;
 	
