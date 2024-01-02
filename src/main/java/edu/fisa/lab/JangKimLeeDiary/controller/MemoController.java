@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.fisa.lab.JangKimLeeDiary.model.MemoService;
+import edu.fisa.lab.JangKimLeeDiary.model.dto.MemoDTO;
 
 
 /* client 요청시 각 메소드의 반환 타입으로 JSON 으로 응답하지 않고(@RestController)
@@ -30,31 +31,31 @@ public class MemoController {
 	@Autowired
 	MemoService memoService;
 
-	@RequestMapping(path = "/activistAllView", method = RequestMethod.GET)
-	public ModelAndView activistAll() throws Exception {
+	@RequestMapping(path = "/memoAllView", method = RequestMethod.GET)
+	public ModelAndView memoAll() throws Exception {
 		System.out.println("---------");
-		List<ActivistDTO> all = probonoService.getAllActivists();
+		List<MemoDTO> all = memoService.getAllMemo();
 		
 		//HttpServletRequest와 흡사한 기능의 객체
 		//데이터인 model과 화면 view
 		ModelAndView md = new ModelAndView();
 		
-		md.addObject("activistAll", all); //setAttribute("activistAll", all)
-		md.setViewName("activist/activistList");
+		md.addObject("memoAll", all); //setAttribute("memoAll", all)
+		md.setViewName("memo/memoList");
 		return md;
 	}
 	
-	/* forward로 jsp파일 실행하는 코드
-	 * 예외 발생시 forward방식으로 jsp에게 응답하게 하는 방식
-	 * 
-	 * 주요 API
-	 * Model - HttpServletRequest 객체와 동일
-	 * addAttribute() : setAttribute()와 동일
-	 */
-	@ExceptionHandler
-	public String exceptionHandler(Exception e, Model m) {
-		m.addAttribute("errorMsg", "발생된 이슈 " + e.getMessage());
-		e.printStackTrace();
-		return "forward:showError.jsp";
-	}
+//	/* forward로 jsp파일 실행하는 코드
+//	 * 예외 발생시 forward방식으로 jsp에게 응답하게 하는 방식
+//	 * 
+//	 * 주요 API
+//	 * Model - HttpServletRequest 객체와 동일
+//	 * addAttribute() : setAttribute()와 동일
+//	 */
+//	@ExceptionHandler
+//	public String exceptionHandler(Exception e, Model m) {
+//		m.addAttribute("errorMsg", "발생된 이슈 " + e.getMessage());
+//		e.printStackTrace();
+//		return "forward:showError.jsp";
+//	}
 }
