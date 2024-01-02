@@ -44,7 +44,8 @@ function calendarMaker(target, date) {
 	custom_calendar_table.height = '100%';
     $(target).find("#custom_set_date").append(tag);
     calMoveEvtFn();
-    console.log(year + " " + month + " " + date);
+    
+    document.getElementById("memo").innerHTML = year + " " + month + " " + date;
 
     function assembly(year, month) {
         var calendar_html_code =
@@ -72,6 +73,36 @@ function calendarMaker(target, date) {
         return calendar_html_code;
     }
 
+	function fetchMemoByDate(year, month, date) {
+    var apiUrl = 'memoFindByDate?date=' + year + '-' + month + '-' + date;
+    // AJAX를 사용하여 API 호출
+    	$.ajax({
+        	url: apiUrl,
+        	type: 'GET',
+       		contentType: 'application/json',
+       		success: function(response) {
+				var memoHTML = "<table border='1'  style='width:100%; font-size: 30px;'>";
+           		response.forEach(function(memo) {
+                	let id = memo.memoId;
+                	let date = memo.memoDate;
+                	let content = memo.memoContents;
+                // 예시: title과 content를 화면에 추가
+                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "<td><button id=bnt" + id + ">Delete</button></td></tr>";
+                	memoHTML += ` <script>
+            		document.getElementById("bnt${id}").addEventListener("click", function() {
+					location.href="http://localhost/diary/memoDelete?id=${id}";})
+            		</script>`;
+            	});
+            // 최종적으로 모든 메모를 화면에 표시
+            memoHTML += "</table>"
+            document.getElementById("memo").innerHTML = memoHTML;
+        },
+        error: function(error) {
+            console.error('API 호출 에러:', error);
+        }
+    	});
+	}
+
     function calMoveEvtFn() {
         //전달 클릭
         $(".custom_calendar_table").on("click", ".prev", function () {
@@ -88,6 +119,7 @@ function calendarMaker(target, date) {
             $(".custom_calendar_table .select_day").removeClass("select_day");
             $(this).removeClass("select_day").addClass("select_day");
            	date = $(this).text();
+           	fetchMemoByDate(year, month, date);
         });
     }
 }
