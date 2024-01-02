@@ -19,19 +19,22 @@ public class MemoRestController {
 
 	// 모든 memo 검색 메소드
 	@GetMapping("/memoAll")
-	public List<MemoDTO> probonoProjectAll() throws Exception {
+	public List<MemoDTO> memoAll() throws Exception {
 		return memoService.getAllMemo();
 	}
 
 	@GetMapping("/memoFindByDate")
-	public List<MemoDTO> activist(@RequestParam("date") String date) throws Exception {
+	public List<MemoDTO> findMemoByDate(@RequestParam("date") String date) throws Exception {
 		return memoService.getFindByDate(date); //json 포멧으로 client의 js 요청 영역으로 출력
 	}
 
 	@PostMapping("/memoInsert")
-	protected boolean activistInsert(MemoDTO memo) throws Exception {
-		boolean result = memoService.addMemo(memo);
-		return result;
+	protected boolean memoInsert(MemoDTO memo) throws Exception {
+		return memoService.addMemo(memo);
 	}
-
+	
+	@GetMapping("/memoDelete")
+	public boolean memoDelete(int id) throws Exception{
+		return memoService.deleteMemo(id);
+	}
 }

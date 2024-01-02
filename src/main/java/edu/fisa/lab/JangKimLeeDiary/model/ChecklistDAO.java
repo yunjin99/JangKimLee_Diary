@@ -1,6 +1,5 @@
 package edu.fisa.lab.JangKimLeeDiary.model;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +15,4 @@ public interface ChecklistDAO extends JpaRepository<Checklist, Integer> {
 	@Modifying
 	@Query("update Checklist a set a.checkContents=:checkContents where a.id=:id")
 	int updateChecklistByIdcheckContents(@Param("id") Integer id, @Param("checkContents") String checkContents);
-	
-//	@Modifying
-	@Query("SELECT a FROM Memo a WHERE a.memoDate = :date")
-	List<Checklist> memoByDate(@Param("date") String date);	
 }

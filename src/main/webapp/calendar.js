@@ -88,7 +88,6 @@ function calendarMaker(target, date) {
             $(".custom_calendar_table .select_day").removeClass("select_day");
             $(this).removeClass("select_day").addClass("select_day");
            	date = $(this).text();
-           	console.log(year + " " + month + " " + date);
         });
     }
 }
