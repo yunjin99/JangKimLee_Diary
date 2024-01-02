@@ -6,10 +6,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: user01
+    password: root
     #url: jdbc:mysql://127.0.0.1:8777/fisa?useSSL=false&allowPublicKeyRetrieval=true
     url: jdbc:mysql://127.0.0.1:3306/fisa?useSSL=false&allowPublicKeyRetrieval=true
-    username: user01
+    username: root
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
