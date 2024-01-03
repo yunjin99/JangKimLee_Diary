@@ -31,6 +31,8 @@
 	<script>
 		function deleteMemo(id) {
 			var xhttp = new XMLHttpRequest();
+			alert("삭제되었습니다");
+			
 			const url = "memoDelete?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
@@ -60,7 +62,7 @@
 			let insertQueryString = `memoId=${document.getElementById("id").value}&memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert(this.responseText);
+				alert("추가되었습니다");
 			};
 			xhttp.open("POST", "memoInsert");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
