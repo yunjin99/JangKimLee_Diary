@@ -80,7 +80,6 @@ function calendarMaker(target, date) {
        		contentType: 'application/json',
        		success: function(response) {
 				var memoHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
-				var checklistHTML = "<br>";
 				response.forEach(function(memo) {
                 	let id = memo.memoId;
                 	let date = memo.memoDate;
@@ -91,9 +90,34 @@ function calendarMaker(target, date) {
             // 최종적으로 모든 메모를 화면에 표시
             memoHTML += `</table> <button onclick="saveMemo()">다이어리 추가</button>
 		<div id='insertUiMemoView'></div>`;
-			checklistHTML += `</table> <button onclick="saveChecklist()">다이어리 추가</button>
-		<div id='insertUiChecklistView'></div>`;
             document.getElementById("memo").innerHTML = memoHTML;
+        },
+        error: function(error) {
+            console.error('API 호출 에러:', error);
+        }
+    	});
+	}
+	
+	function fetchChecklistByDate(year, month, date) {
+    var apiUrl = 'checklistByDate?date=' + year + '-' + month + '-' + date;
+    // AJAX를 사용하여 API 호출
+    	$.ajax({
+        	url: apiUrl,
+        	type: 'GET',
+       		contentType: 'application/json',
+       		success: function(response) {
+				var checklistHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
+            	response.forEach(function(checklist){
+					let status = checklist.checkStatus;
+					let id = checklist.checkId;
+					let date = checklist.checkDate;
+					let content = checklist.checkContents;
+					
+					checklistHTML += "<tr><td>" + status + "</td><td>" + id + "</td><td>" + date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteChecklist(id)'>Delete</button></td> <td><button id=" + id + "onclick='editChecklist(id)'>Edit</button></td></tr>";
+				})
+            // 최종적으로 모든 메모를 화면에 표시
+			checklistHTML += `</table> <button onclick="saveChecklist()">체크리스트 추가</button>
+		<div id='insertUiChecklistView'></div>`;
             document.getElementById("checklist").innerHTML = checklistHTML;
         },
         error: function(error) {
@@ -119,6 +143,7 @@ function calendarMaker(target, date) {
             $(this).removeClass("select_day").addClass("select_day");
            	date = $(this).text();
            	fetchMemoByDate(year, month, date);
+           	fetchChecklistByDate(year, month, date);
         });
     }
 }

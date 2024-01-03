@@ -25,7 +25,6 @@ public class ChecklistRestController {
 		return checklistService.getAllChecklist();
 	}
 	
-
 	@GetMapping("/checklistByDate")
 	public List<ChecklistDTO> checklist(@RequestParam("date") String checkDate) throws Exception {
 		return checklistService.getChecklistbyDate(checkDate);
@@ -37,7 +36,7 @@ public class ChecklistRestController {
 		return result ? "체크리스트 추가 완료" : "추가실패";
 	}
 	
-	@DeleteMapping("/deleteChecklist")
+	@GetMapping("/deleteChecklist")
 	public boolean deleteChecklist(int id) throws Exception{
 		return checklistService.deleteChecklist(id);
 	}
