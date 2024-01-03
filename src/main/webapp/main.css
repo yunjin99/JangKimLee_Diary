@@ -12,7 +12,8 @@ body {
   position: relative;
   top: 0px;
   left: 0px;
-  overflow: hidden;
+  overflow: auto;
+  white-space: nowrap;
 }
 .v1_11 {
   width: 324px;
