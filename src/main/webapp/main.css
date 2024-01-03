@@ -90,7 +90,8 @@ body {
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  overflow: hidden;
+  overflow: auto;
+  white-space: nowrap;
 }
 .v8_25 {
   width: 950px;
@@ -104,7 +105,8 @@ body {
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  overflow: hidden;
+  overflow: auto;
+  white-space: nowrap;
 }
 .v8_26 {
   width: 180px;
@@ -223,4 +225,10 @@ body {
   left: 261px;
   border: 1px solid rgba(0,0,0,1);
   overflow: hidden;
+}
+
+div.scrollMenu {
+  background-color: rgb(176, 240, 246);
+  overflow: auto;
+  white-space: nowrap;
 }
