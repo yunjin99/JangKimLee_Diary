@@ -24,4 +24,8 @@ public class ChecklistDTO {
 	public Checklist toEntity() {
 		return Checklist.builder().checkId(checkId).checkDate(checkDate).checkContents(checkContents).build();
 	}
+	
+	 public void setCheckStatus(boolean checkStatus) {
+	        this.checkStatus = checkStatus;
+	}
 }

@@ -63,17 +63,29 @@ public class ChecklistService {
 
 
 	@Transactional
-	public boolean updateChecklist(Integer ChecklistId, String checkContents) throws Exception {
+	public boolean updateChecklistContents(Integer checklistId, String checkContents) throws Exception {
+	    notExistChecklist(checklistId);
 
-		notExistChecklist(ChecklistId);
+	    int result = ChecklistDAO.updateChecklistByIdcheckContents(checklistId, checkContents);
 
-		int result = ChecklistDAO.updateChecklistByIdcheckContents(ChecklistId, checkContents);
-
-		if (result == 0) {
-			throw new NotExistException("체크리스트 정보 갱신 실패");
-		}
-		return true;
+	    if (result == 0) {
+	        throw new NotExistException("체크리스트 내용 갱신 실패");
+	    }
+	    return true;
 	}
+	
+	@Transactional
+	public boolean updateChecklistStatus(Integer checklistId, boolean checkStatus) throws Exception {
+	    notExistChecklist(checklistId);
+
+	    int result = ChecklistDAO.updateChecklistByIdcheckStatus(checklistId, checkStatus);
+
+	    if (result == 0) {
+	        throw new NotExistException("체크리스트 상태 갱신 실패");
+	    }
+	    return true;
+	}
+	
 
 	public boolean deleteChecklist(Integer ChecklistId) throws Exception {
 		notExistChecklist(ChecklistId);

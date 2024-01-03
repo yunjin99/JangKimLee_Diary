@@ -36,6 +36,17 @@ public class ChecklistRestController {
 		return result ? "체크리스트 추가 완료" : "추가실패";
 	}
 	
+	@PostMapping("/updateChecklistStatus")
+	public String updateChecklistStatus(@RequestParam("id") Integer checklistId, @RequestParam("status") boolean checkStatus) throws Exception {
+	    boolean result = checklistService.updateChecklistStatus(checklistId, checkStatus);
+	    return result ? "체크리스트 상태 수정 완료" : "상태 수정 실패";
+	}
+	
+	public String updateChecklistContents(@RequestParam("id") Integer checklistId, @RequestParam("contents") String checkContents) throws Exception {
+	    boolean result = checklistService.updateChecklistContents(checklistId, checkContents);
+	    return result ? "체크리스트 내용 수정 완료" : "수정 실패";
+	}
+	
 	@GetMapping("/deleteChecklist")
 	public boolean deleteChecklist(int id) throws Exception{
 		return checklistService.deleteChecklist(id);
