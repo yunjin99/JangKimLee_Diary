@@ -82,60 +82,19 @@ function calendarMaker(target, date) {
        		contentType: 'application/json',
        		success: function(response) {
 				var memoHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
-				var scriptHTML = "<script>";
-           		response.forEach(function(memo) {
+				response.forEach(function(memo) {
                 	let id = memo.memoId;
                 	let date = memo.memoDate;
                 	let content = memo.memoContents;
                 // 예시: title과 content를 화면에 추가
-                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id='bnt" + id + "' onclick='delete" + id + "()'>Delete</button></td></tr>";
-                	scriptHTML += `
-            		function delete${id}() {
-						var xhttp = new XMLHttpRequest();
-    					xhttp.open("GET", "memoDelete?id=${id}", true);
-    					xhttp.send();			
-    				}`;
-    			function saveMemo(){
-					let insertUI = `
-					<table border="1">
-						<tr>
-							<td>id</td><td><input type="text" id="id"></td>
-						</tr>
-						<tr>
-				 			<td>date</td><td><input type="text" id="date"></td>
-						</tr>
-				 		<tr>
-				 			<td>contents</td><td><input type="text" id="contents"></td>
-				 		</tr>
-				 		<tr>
-				 			<td colspan="2">
-				 				<button onclick="memoInsert()"/>추가</button>
-				 				<input type="reset" value="취소">
-				 			</td>
-				 		</tr>
-					</table>`;
-				document.getElementById("insertUiView").innerHTML = insertUI;
-				}
-			function memoInsert(){
-				let insertQueryString = `memoId=${document.getElementById("id").value}&memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;
-		
-				const xhttp = new XMLHttpRequest();		
-				xhttp.onload = function() {			
-					alert(this.responseText);
-				};
-				
-				xhttp.open("POST", "memoInsert");
-				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send(insertQueryString);
-			}		
+                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo()'>Delete</button></td></tr>";
             });
             // 최종적으로 모든 메모를 화면에 표시
             memoHTML += `</table> <button onclick="saveMemo()">다이어리 추가</button>
 		<div id='insertUiView'></div>`;
-            scriptHTML += "</script>";
-            console.log(memoHTML + scriptHTML);
+            console.log(memoHTML);
             
-            document.getElementById("memo").innerHTML = memoHTML + scriptHTML;
+            document.getElementById("memo").innerHTML = memoHTML;
         },
         error: function(error) {
             console.error('API 호출 에러:', error);
