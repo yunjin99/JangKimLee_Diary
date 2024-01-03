@@ -44,8 +44,6 @@ function calendarMaker(target, date) {
 	custom_calendar_table.height = '100%';
     $(target).find("#custom_set_date").append(tag);
     calMoveEvtFn();
-    
-    document.getElementById("memo").innerHTML = year + " " + month + " " + date;
 
     function assembly(year, month) {
         var calendar_html_code =
@@ -82,19 +80,21 @@ function calendarMaker(target, date) {
        		contentType: 'application/json',
        		success: function(response) {
 				var memoHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
+				var checklistHTML = "<br>";
 				response.forEach(function(memo) {
                 	let id = memo.memoId;
                 	let date = memo.memoDate;
                 	let content = memo.memoContents;
                 // 예시: title과 content를 화면에 추가
-                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo(id)'>Delete</button></td></tr>";
+                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo(id)'>Delete</button></td> <td><button id=" + id + " onclick='editMemo(id)'>Edit</button></td> </tr>";
             });
             // 최종적으로 모든 메모를 화면에 표시
             memoHTML += `</table> <button onclick="saveMemo()">다이어리 추가</button>
-		<div id='insertUiView'></div>`;
-            console.log(memoHTML);
-            
+		<div id='insertUiMemoView'></div>`;
+			checklistHTML += `</table> <button onclick="saveChecklist()">다이어리 추가</button>
+		<div id='insertUiChecklistView'></div>`;
             document.getElementById("memo").innerHTML = memoHTML;
+            document.getElementById("checklist").innerHTML = checklistHTML;
         },
         error: function(error) {
             console.error('API 호출 에러:', error);
