@@ -52,7 +52,7 @@
 			alert(insertQueryString);
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert(this.responseText);
+				alert("수정되었습니다");
 			};
 			xhttp.open("POST", "memoUpdate");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -92,21 +92,27 @@
 			xhttp.send(insertQueryString);
 		}
 		
-		function deleteChecklist(id) {
+		function deleteChecklist(id, year, month, day) {
 			var xhttp = new XMLHttpRequest();
 			alert("삭제되었습니다");
 			
 			const url = "deleteChecklist?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
+			// 삭제 후 페이지를 다시 로드
+		    setTimeout(function() {
+		    	fetchChecklistByDate(year, month, day);
+		    }, 1000); // 1초 딜레이
 		}
+		
 		function editChecklist(id) {
 			var xhttp = new XMLHttpRequest();
 			const url = "deleteChecklist?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
 		}
-        function saveChecklist(){
+		
+        function saveChecklist(year, month, day){
 			let insertUI = `
 				<table border="1">
 					<tr>
@@ -122,25 +128,28 @@
 				 		<td>contents</td><td><input type="text" id="contents"></td>
 				 	</tr>
 				 	<tr>
-				 		<td colspan="2">
-				 			<button onclick="checklistInsert()"/>추가</button>
-				 			<input type="reset" value="취소">
-				 		</td>
-				 	</tr>
-				</table>`;
+				<td colspan="2">
+	 			<button onclick="checklistInsert(${year}, ${month}, ${day})">추가</button>
+	 			<input type="reset" value="취소">
+	 		</td>
+	 	</tr>
+	</table>`;
 			document.getElementById("insertUiChecklistView").innerHTML = insertUI;
 		}
-		function checklistInsert(){
+		function checklistInsert(year, month, day){
 			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkId=${document.getElementById("id").value}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("추가되었습니다");
+				// 추가 후 페이지를 다시 로드
+				fetchChecklistByDate(year, month, day);
 			};
 			xhttp.open("POST", "insertChecklist");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(insertQueryString);
 		}
+		
         </script>
-        </button>
+	</button>
 </body>
 </html>

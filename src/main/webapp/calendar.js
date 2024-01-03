@@ -102,14 +102,17 @@ function calendarMaker(target, date) {
 		});
 	}
 
-	function fetchChecklistByDate(year, month, date) {
-		var apiUrl = 'checklistByDate?date=' + year + '-' + month + '-' + date;
+	window.fetchChecklistByDate = function(year, month, day){
+		console.log("fetchMemoByDate 호출 " + year + '-' + month + '-' + day);
+		var apiUrl = 'checklistByDate?date=' + year + '-' + month + '-' + day;
 		// AJAX를 사용하여 API 호출
 		$.ajax({
 			url: apiUrl,
 			type: 'GET',
 			contentType: 'application/json',
+			cache: false,
 			success: function(response) {
+				console.log('서버 응답 데이터:', response);
 				var checklistHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
 				response.forEach(function(checklist) {
 					let status = checklist.checkStatus;
@@ -117,12 +120,12 @@ function calendarMaker(target, date) {
 					let date = checklist.checkDate;
 					let content = checklist.checkContents;
 
-					checklistHTML += "<tr><td><input type='checkbox'" + (status ? "checked" : "") + "></td><td>" + content + "</td><td><button id=" + id + " onclick='deleteChecklist(id)'>Delete</button></td> <td><button id=" + id + "onclick='editChecklist(id)'>Edit</button></td></tr>";
+					checklistHTML += "<tr><td><input type='checkbox'" + (status ? "checked" : "") + "></td><td>" + content + "</td><td><button id=" + id + " onclick='deleteChecklist(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td> <td><button id=" + id + "onclick='editChecklist(id)'>Edit</button></td></tr>";
 				})
 				// 최종적으로 모든 메모를 화면에 표시
-				checklistHTML += `</table> <button onclick="saveChecklist()">체크리스트 추가</button>
+				checklistHTML += `</table> <button onclick="saveChecklist(${year}, ${month}, ${day})">체크리스트 추가</button>
 		<div id='insertUiChecklistView'></div>`;
-				document.getElementById("checklist").innerHTML = checklistHTML;
+				updateCheckView(checklistHTML);
 			},
 			error: function(error) {
 				console.error('API 호출 에러:', error);
@@ -133,6 +136,11 @@ function calendarMaker(target, date) {
 	// 화면 갱신을 담당하는 함수
 	function updateMemoView(memoHTML) {
 		document.getElementById("memo").innerHTML = memoHTML;
+	}
+	
+		// 화면 갱신을 담당하는 함수
+	function updateCheckView(checklistHTML) {
+		document.getElementById("checklist").innerHTML = checklistHTML;
 	}
 	
 	function calMoveEvtFn() {
