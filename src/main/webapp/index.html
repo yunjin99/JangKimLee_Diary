@@ -29,11 +29,11 @@
 	<br>
 	<hr>
 	<script>
-		function deleteMemo() {
+		function deleteMemo(id) {
 			var xhttp = new XMLHttpRequest();
-			alert(`${this.id}`);
-			xhttp.open("GET", `memoDelete?id=${this.id}`, true);
-			xhttp.send();			
+			const url = "memoDelete?id=" + id;
+			xhttp.open("GET", url, true);
+			xhttp.send();
 		}
         function saveMemo(){
 			let insertUI = `

@@ -87,7 +87,7 @@ function calendarMaker(target, date) {
                 	let date = memo.memoDate;
                 	let content = memo.memoContents;
                 // 예시: title과 content를 화면에 추가
-                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo()'>Delete</button></td></tr>";
+                	memoHTML += "<tr><td>" + id + "</td><td>"+ date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo(id)'>Delete</button></td></tr>";
             });
             // 최종적으로 모든 메모를 화면에 표시
             memoHTML += `</table> <button onclick="saveMemo()">다이어리 추가</button>
