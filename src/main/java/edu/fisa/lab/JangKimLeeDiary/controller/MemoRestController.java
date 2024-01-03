@@ -37,4 +37,9 @@ public class MemoRestController {
 	public boolean memoDelete(int id) throws Exception{
 		return memoService.deleteMemo(id);
 	}
+	
+	@PostMapping("/memoUpdate")
+	protected boolean memoUpdate(MemoDTO memo) throws Exception{
+		return memoService.updateMemo(memo);
+	}
 }

@@ -44,10 +44,19 @@
 
 		}
 		function editMemo(id) {
-			var xhttp = new XMLHttpRequest();
-			const url = "memoDelete?id=" + id;
-			xhttp.open("GET", url, true);
-			xhttp.send();
+			let contentsId = `memoContents${id}`;
+			let contentsValue = document.getElementById(contentsId).value;
+			let dateId = `date${id}`;
+			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
+			let insertQueryString = `memoId=${id}&memoDate=${dateValue}&memoContents=${contentsValue}`;
+			alert(insertQueryString);
+			const xhttp = new XMLHttpRequest();		
+			xhttp.onload = function() {			
+				alert(this.responseText);
+			};
+			xhttp.open("POST", "memoUpdate");
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(insertQueryString);
 		}
         function saveMemo(year, month, day){
 			let insertUI = `
@@ -78,7 +87,7 @@
 				// 추가 후 페이지를 다시 로드
 				fetchMemoByDate(year, month, day);
 			};
-			xhttp.open("POST", "memoInsert");
+			xhttp.open("POST", "memoUpdate");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(insertQueryString);
 		}
@@ -132,5 +141,6 @@
 			xhttp.send(insertQueryString);
 		}
         </script>
+        </button>
 </body>
 </html>

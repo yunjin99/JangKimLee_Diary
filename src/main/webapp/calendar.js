@@ -45,6 +45,7 @@ function calendarMaker(target, date) {
 	$(target).find("#custom_set_date").append(tag);
 	calMoveEvtFn();
 
+            
 	function assembly(year, month) {
 		var calendar_html_code =
 			"<table class='custom_calendar_table'>" +
@@ -84,15 +85,15 @@ function calendarMaker(target, date) {
 				console.log('서버 응답 데이터:', response);
 				var memoHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
 				response.forEach(function(memo) {
-					let id = memo.memoId;
-					let date = memo.memoDate;
-					let content = memo.memoContents;
-					// 예시: title과 content를 화면에 추가
-					memoHTML += "<tr><td>" + id + "</td><td>" + date + "</td><td>" + content + "</td><td><button id=" + id + " ' onclick='deleteMemo(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td></tr>";
-				});
-				// 최종적으로 모든 메모를 화면에 표시
-				memoHTML += `</table> <button onclick="saveMemo(${year}, ${month}, ${day})">다이어리 추가</button>
-		<div id='insertUiMemoView'></div>`;
+                	let id = memo.memoId;
+                	let date = memo.memoDate;
+                	let content = memo.memoContents;
+                // 예시: title과 content를 화면에 추가
+                	memoHTML += "<tr><td>" + id + "</td><td id='date" + id + "'>"+ date + "</td><td><input id='memoContents" + id + "' value='"+ content + "' style='width:100%; font-size:35px'></input></td><td><button value=" + id + " onclick='deleteMemo(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td> <td><button value=" + id + " onclick='editMemo(value)'>Edit</button></td> </tr>";
+            });
+            // 최종적으로 모든 메모를 화면에 표시
+           memoHTML += `</table> <button onclick="saveMemo(${year}, ${month}, ${day})">다이어리 추가</button> 
+			<div id='insertUiMemoView'></div>`; 
 				updateMemoView(memoHTML);
 			},
 			error: function(error) {

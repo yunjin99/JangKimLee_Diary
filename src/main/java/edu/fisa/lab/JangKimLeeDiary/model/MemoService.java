@@ -52,4 +52,9 @@ public class MemoService {
 //		}
 		return true;
 	}
+	public boolean updateMemo(MemoDTO memo) throws Exception{
+		deleteMemo(memo.getMemoId());
+		addMemo(memo);
+		return true;
+	}
 }
