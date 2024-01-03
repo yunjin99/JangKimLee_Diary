@@ -112,7 +112,7 @@
 			document.getElementById("insertUiChecklistView").innerHTML = insertUI;
 		}
 		function checklistInsert(){
-			let insertQueryString = `checkStatus=${document.getElementById("status").value}&checkId=${document.getElementById("id").value}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
+			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkId=${document.getElementById("id").value}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("추가되었습니다");
