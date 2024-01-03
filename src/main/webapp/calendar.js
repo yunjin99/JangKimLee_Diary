@@ -71,26 +71,29 @@ function calendarMaker(target, date) {
 		return calendar_html_code;
 	}
 
-	function fetchMemoByDate(year, month, date) {
-		var apiUrl = 'memoFindByDate?date=' + year + '-' + month + '-' + date;
+	window.fetchMemoByDate = function(year, month, day) {
+		console.log("fetchMemoByDate 호출 " + year + '-' + month + '-' + day);
+		var apiUrl = 'memoFindByDate?date=' + year + '-' + month + '-' + day;
 		// AJAX를 사용하여 API 호출
 		$.ajax({
 			url: apiUrl,
 			type: 'GET',
 			contentType: 'application/json',
+			cache: false,
 			success: function(response) {
+				console.log('서버 응답 데이터:', response);
 				var memoHTML = "<br><table border='1' style='width:100%; font-size: 30px;'>";
 				response.forEach(function(memo) {
 					let id = memo.memoId;
 					let date = memo.memoDate;
 					let content = memo.memoContents;
 					// 예시: title과 content를 화면에 추가
-					memoHTML += "<tr><td>" + id + "</td><td>" + date + "</td><td>" + content + "</td><td><button id=" + id + " onclick='deleteMemo(id)'>Delete</button></td> <td><button id=" + id + " onclick='editMemo(id)'>Edit</button></td> </tr>";
+					memoHTML += "<tr><td>" + id + "</td><td>" + date + "</td><td>" + content + "</td><td><button id=" + id + " ' onclick='deleteMemo(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td></tr>";
 				});
 				// 최종적으로 모든 메모를 화면에 표시
-				memoHTML += `</table> <button onclick="saveMemo()">다이어리 추가</button>
+				memoHTML += `</table> <button onclick="saveMemo(${year}, ${month}, ${day})">다이어리 추가</button>
 		<div id='insertUiMemoView'></div>`;
-				document.getElementById("memo").innerHTML = memoHTML;
+				updateMemoView(memoHTML);
 			},
 			error: function(error) {
 				console.error('API 호출 에러:', error);
@@ -126,6 +129,11 @@ function calendarMaker(target, date) {
 		});
 	}
 
+	// 화면 갱신을 담당하는 함수
+	function updateMemoView(memoHTML) {
+		document.getElementById("memo").innerHTML = memoHTML;
+	}
+	
 	function calMoveEvtFn() {
 		//전달 클릭
 		$(".custom_calendar_table").on("click", ".prev", function() {

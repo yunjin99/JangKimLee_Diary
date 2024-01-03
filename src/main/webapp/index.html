@@ -29,11 +29,19 @@
 	<br>
 	<hr>
 	<script>
-		function deleteMemo(id) {
+		function deleteMemo(id, year, month, day) {
 			var xhttp = new XMLHttpRequest();
+			alert("삭제되었습니다");
+			
 			const url = "memoDelete?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
+			
+			// 삭제 후 페이지를 다시 로드
+		    setTimeout(function() {
+		        fetchMemoByDate(year, month, day);
+		    }, 1000); // 1초 딜레이
+
 		}
 		function editMemo(id) {
 			var xhttp = new XMLHttpRequest();
@@ -41,7 +49,7 @@
 			xhttp.open("GET", url, true);
 			xhttp.send();
 		}
-        function saveMemo(){
+        function saveMemo(year, month, day){
 			let insertUI = `
 				<table border="1">
 					<tr>
@@ -54,19 +62,21 @@
 				 		<td>contents</td><td><input type="text" id="contents"></td>
 				 	</tr>
 				 	<tr>
-				 		<td colspan="2">
-				 			<button onclick="memoInsert()"/>추가</button>
-				 			<input type="reset" value="취소">
-				 		</td>
-				 	</tr>
-				</table>`;
+				 	<td colspan="2">
+		 			<button onclick="memoInsert(${year}, ${month}, ${day})">추가</button>
+		 			<input type="reset" value="취소">
+		 		</td>
+		 	</tr>
+		</table>`;
 			document.getElementById("insertUiMemoView").innerHTML = insertUI;
 		}
-		function memoInsert(){
+		function memoInsert(year, month, day){
 			let insertQueryString = `memoId=${document.getElementById("id").value}&memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert(this.responseText);
+				alert("추가되었습니다");
+				// 추가 후 페이지를 다시 로드
+				fetchMemoByDate(year, month, day);
 			};
 			xhttp.open("POST", "memoInsert");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
