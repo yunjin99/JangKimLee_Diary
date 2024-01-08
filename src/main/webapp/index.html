@@ -29,6 +29,7 @@
 	<br>
 	<hr>
 	<script>
+		
 		function deleteMemo(id, year, month, day) {
 			var xhttp = new XMLHttpRequest();
 			alert("삭제되었습니다");
@@ -60,38 +61,33 @@
 			xhttp.send(insertQueryString);
 		}
         function saveMemo(year, month, day){
-			let insertUI = `
-				<table border="1"  style='font-size:30px'>
-			
-				<tr>
-				<td>id</td><td><input type="text" id="id" style='font-size:35px'></td>
-			</tr>
-			<tr>
-		 		<td>date</td><td><input type="text" id="date" style='font-size:35px'></td>
-			</tr>
-		 	<tr>
-		 		<td>contents</td><td><input type="text" id="contents" style='font-size:35px'></td>
-		 	</tr>
-				 	<tr>
-				 	<td colspan="2">
-		 			<button onclick="memoInsert(${year}, ${month}, ${day})">추가</button>
-		 			<input type="reset" value="취소">
-		 		</td>
-		 	</tr>
-		</table>`;
-			document.getElementById("insertUiMemoView").innerHTML = insertUI;
+        	 let insertUI = `
+        	        <table border="1" style='font-size:30px'>
+        	            <tr>
+        	                <td>date</td><td><input type="text" id="date" style='font-size:35px' value="${selectedYear}-${selectedMonth}-${selectedDay}"></td>
+        	            </tr>
+        	            <tr>
+        	                <td>contents</td><td><input type="text" id="contents" style='font-size:35px'></td>
+        	            </tr>
+        	            <tr>
+        	                <td colspan="2">
+        	                    <button onclick="memoInsert()">추가</button>
+        	                    <input type="reset" value="취소">
+        	                </td>
+        	            </tr>
+        	        </table>`;
+        	    document.getElementById("insertUiMemoView").innerHTML = insertUI;
 		}
 		function memoInsert(year, month, day){
-			let insertQueryString = `memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;	
-			const xhttp = new XMLHttpRequest();		
-			xhttp.onload = function() {			
-				alert("추가되었습니다");
-				// 추가 후 페이지를 다시 로드
-				fetchMemoByDate(year, month, day);
-			};
-			xhttp.open("POST", "memoUpdate");
-			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhttp.send(insertQueryString);
+			let insertQueryString = `memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;
+		    const xhttp = new XMLHttpRequest();
+		    xhttp.onload = function() {
+		        alert("추가되었습니다");
+		        fetchMemoByDate(selectedYear, selectedMonth, selectedDay);
+		    };
+		    xhttp.open("POST", "memoUpdate");
+		    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		    xhttp.send(insertQueryString);
 		}
 		
 		function deleteChecklist(id, year, month, day) {
@@ -135,39 +131,36 @@
 		    }, 1000); // 1초 딜레이
 		}
 function saveChecklist(year, month, day){
-			let insertUI = `
-				<table border="1" style="font-size:30px">
-					<tr>
-						<td>status</td><td><input type="checkbox" id="status"></td>
-					</tr>
-					<tr>
-						<td>id</td><td><input type="text" id="id" style="font-size:35px"></td>
-					</tr>
-					<tr>
-				 		<td>date</td><td><input type="text" id="date" style="font-size:35px"></td>
-					</tr>
-				 	<tr>
-				 		<td>contents</td><td><input type="text" id="contents" style="font-size:35px"></td>
-				 	</tr>
-				 	<tr>
-				<td colspan="2">
-	 			<button onclick="checklistInsert(${year}, ${month}, ${day})">추가</button>
-	 			<input type="reset" value="취소">
-	 		</td>
-	 	</tr>
-	</table>`;
-			document.getElementById("insertUiChecklistView").innerHTML = insertUI;
+	let insertUI = `
+        <table border="1" style="font-size:30px">
+            <tr>
+                <td>status</td><td><input type="checkbox" id="status"></td>
+            </tr>
+            <tr>
+                <td>date</td><td><input type="text" id="date" style="font-size:35px" value="${selectedYear}-${selectedMonth}-${selectedDay}"></td>
+            </tr>
+            <tr>
+                <td>contents</td><td><input type="text" id="contents" style="font-size:35px"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button onclick="checklistInsert()">추가</button>
+                    <input type="reset" value="취소">
+                </td>
+            </tr>
+        </table>`;
+    document.getElementById("insertUiChecklistView").innerHTML = insertUI;
 		}
 		function checklistInsert(year, month, day){
-			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
-			const xhttp = new XMLHttpRequest();		
-			xhttp.onload = function() {			
-				alert("추가되었습니다");
-				fetchChecklistByDate(year, month, day);
-			};
-			xhttp.open("POST", "insertChecklist");
-			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhttp.send(insertQueryString);
+			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;
+		    const xhttp = new XMLHttpRequest();
+		    xhttp.onload = function() {
+		        alert("추가되었습니다");
+		        fetchChecklistByDate(selectedYear, selectedMonth, selectedDay);
+		    };
+		    xhttp.open("POST", "insertChecklist");
+		    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		    xhttp.send(insertQueryString);
 		}
         </script>
 </body>
