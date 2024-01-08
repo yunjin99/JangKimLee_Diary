@@ -82,7 +82,7 @@
 			document.getElementById("insertUiMemoView").innerHTML = insertUI;
 		}
 		function memoInsert(year, month, day){
-			let insertQueryString = `memoId=${document.getElementById("id").value}&memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;	
+			let insertQueryString = `memoDate=${document.getElementById("date").value}&memoContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("추가되었습니다");
@@ -159,7 +159,7 @@ function saveChecklist(year, month, day){
 			document.getElementById("insertUiChecklistView").innerHTML = insertUI;
 		}
 		function checklistInsert(year, month, day){
-			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkId=${document.getElementById("id").value}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
+			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;	
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("추가되었습니다");
