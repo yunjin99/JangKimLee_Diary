@@ -47,12 +47,13 @@
 			let contentsId = `memoContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
 			let dateId = `date${id}`;
+			
 			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
 			let insertQueryString = `memoId=${id}&memoDate=${dateValue}&memoContents=${contentsValue}`;
 			alert(insertQueryString);
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert("수정되었습니다");
+				alert(this.responseText);
 			};
 			xhttp.open("POST", "memoUpdate");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -60,16 +61,17 @@
 		}
         function saveMemo(year, month, day){
 			let insertUI = `
-				<table border="1">
-					<tr>
-						<td>id</td><td><input type="text" id="id"></td>
-					</tr>
-					<tr>
-				 		<td>date</td><td><input type="text" id="date"></td>
-					</tr>
-				 	<tr>
-				 		<td>contents</td><td><input type="text" id="contents"></td>
-				 	</tr>
+				<table border="1"  style='font-size:30px'>
+			
+				<tr>
+				<td>id</td><td><input type="text" id="id" style='font-size:35px'></td>
+			</tr>
+			<tr>
+		 		<td>date</td><td><input type="text" id="date" style='font-size:35px'></td>
+			</tr>
+		 	<tr>
+		 		<td>contents</td><td><input type="text" id="contents" style='font-size:35px'></td>
+		 	</tr>
 				 	<tr>
 				 	<td colspan="2">
 		 			<button onclick="memoInsert(${year}, ${month}, ${day})">추가</button>
@@ -104,28 +106,50 @@
 		    	fetchChecklistByDate(year, month, day);
 		    }, 1000); // 1초 딜레이
 		}
-		
 		function editChecklist(id) {
+			let contentsId = `checklistContents${id}`;
+			let contentsValue = document.getElementById(contentsId).value;
+			let dateId = `checklistDate${id}`;
+			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
+			let checkBoxId = `checkBox${id}`;
+			let checkBoxValue = document.getElementById(checkBoxId).checked;
+			
+			let insertQueryString = `checkId=${id}&checkDate=${dateValue}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
+			alert(insertQueryString);
+			const xhttp = new XMLHttpRequest();		
+			xhttp.onload = function() {			
+				alert(this.responseText);
+			};
+			xhttp.open("POST", "updateChecklist");
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(insertQueryString);
+		}
+        function deleteChecklist(id, year, month, day) {
 			var xhttp = new XMLHttpRequest();
+			alert("삭제되었습니다");
+			
 			const url = "deleteChecklist?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
+			// 삭제 후 페이지를 다시 로드
+		    setTimeout(function() {
+		    	fetchChecklistByDate(year, month, day);
+		    }, 1000); // 1초 딜레이
 		}
-		
-        function saveChecklist(year, month, day){
+function saveChecklist(year, month, day){
 			let insertUI = `
-				<table border="1">
+				<table border="1" style="font-size:30px">
 					<tr>
 						<td>status</td><td><input type="checkbox" id="status"></td>
 					</tr>
 					<tr>
-						<td>id</td><td><input type="text" id="id"></td>
+						<td>id</td><td><input type="text" id="id" style="font-size:35px"></td>
 					</tr>
 					<tr>
-				 		<td>date</td><td><input type="text" id="date"></td>
+				 		<td>date</td><td><input type="text" id="date" style="font-size:35px"></td>
 					</tr>
 				 	<tr>
-				 		<td>contents</td><td><input type="text" id="contents"></td>
+				 		<td>contents</td><td><input type="text" id="contents" style="font-size:35px"></td>
 				 	</tr>
 				 	<tr>
 				<td colspan="2">
@@ -141,15 +165,12 @@
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("추가되었습니다");
-				// 추가 후 페이지를 다시 로드
 				fetchChecklistByDate(year, month, day);
 			};
 			xhttp.open("POST", "insertChecklist");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(insertQueryString);
 		}
-		
         </script>
-	</button>
 </body>
 </html>

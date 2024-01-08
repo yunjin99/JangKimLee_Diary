@@ -7,6 +7,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.fisa.lab.JangKimLeeDiary.exception.MessageException;
 import edu.fisa.lab.JangKimLeeDiary.exception.NotExistException;
@@ -61,36 +62,16 @@ public class ChecklistService {
 		return true;
 	}
 
-
 	@Transactional
-	public boolean updateChecklistContents(Integer checklistId, String checkContents) throws Exception {
-	    notExistChecklist(checklistId);
-
-	    int result = ChecklistDAO.updateChecklistByIdcheckContents(checklistId, checkContents);
-
-	    if (result == 0) {
-	        throw new NotExistException("체크리스트 내용 갱신 실패");
-	    }
+	public boolean updateChecklist(ChecklistDTO checklist) throws Exception {
+		deleteChecklist(checklist.getCheckId());
+	    addChecklist(checklist);
 	    return true;
 	}
-	
-	@Transactional
-	public boolean updateChecklistStatus(Integer checklistId, boolean checkStatus) throws Exception {
-	    notExistChecklist(checklistId);
-
-	    int result = ChecklistDAO.updateChecklistByIdcheckStatus(checklistId, checkStatus);
-
-	    if (result == 0) {
-	        throw new NotExistException("체크리스트 상태 갱신 실패");
-	    }
-	    return true;
-	}
-	
 
 	public boolean deleteChecklist(Integer ChecklistId) throws Exception {
 		notExistChecklist(ChecklistId);
 		ChecklistDAO.deleteById(ChecklistId);
-		
 		return true;
 	}
 

@@ -13,14 +13,7 @@ import edu.fisa.lab.JangKimLeeDiary.model.entity.Memo;
 
 @Repository
 public interface ChecklistDAO extends JpaRepository<Checklist, Integer> {
-	@Modifying
-	@Query("update Checklist a set a.checkContents=:checkContents where a.id=:id")
-	int updateChecklistByIdcheckContents(@Param("id") Integer id, @Param("checkContents") String checkContents);
 	
 	@Query("SELECT a FROM Checklist a WHERE a.checkDate = :date")
 	List<Checklist> findByDate(@Param("date") String date);	
-	
-	@Modifying
-	@Query("update Checklist a set a.checkStatus=:checkStatus where a.id=:id")
-	int updateChecklistByIdcheckStatus(@Param("id") Integer id, @Param("checkStatus") boolean checkStatus);
 }
