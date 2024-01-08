@@ -43,11 +43,11 @@
 		    }, 1000); // 1초 딜레이
 
 		}
-		function editMemo(id) {
+		function editMemo(id, memoDate) {
+			alert(memo_date);
 			let contentsId = `memoContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
 			let dateId = `date${id}`;
-			
 			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
 			let insertQueryString = `memoId=${id}&memoDate=${dateValue}&memoContents=${contentsValue}`;
 			alert(insertQueryString);
@@ -106,15 +106,13 @@
 		    	fetchChecklistByDate(year, month, day);
 		    }, 1000); // 1초 딜레이
 		}
-		function editChecklist(id) {
+		function editChecklist(id, checklistDate) {
 			let contentsId = `checklistContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
-			let dateId = `checklistDate${id}`;
-			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
 			let checkBoxId = `checkBox${id}`;
 			let checkBoxValue = document.getElementById(checkBoxId).checked;
 			
-			let insertQueryString = `checkId=${id}&checkDate=${dateValue}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
+			let insertQueryString = `checkId=${id}&checkDate=${checklistDate}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
 			alert(insertQueryString);
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			

@@ -86,10 +86,10 @@ function calendarMaker(target, date) {
 				var memoHTML = "<br><table style='width:100%; font-size: 30px;'>";
 				response.forEach(function(memo) {
                 	let id = memo.memoId;
-                	let date = memo.memoDate;
                 	let content = memo.memoContents;
+                	let memoDate =`${year} + "-" + ${month} + "-" + ${day}`;
                 // 예시: title과 content를 화면에 추가
-                	memoHTML += "<tr><td>" + id + "</td><td id='date" + id + "'>"+ date + "</td><td><input id='memoContents" + id + "' value='"+ content + "' style='font-size:35px; width:100%'></input></td><td><button value=" + id + " onclick='deleteMemo(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td> <td><button value=" + id + " onclick='editMemo(value)'>Edit</button></td> </tr>";
+                	memoHTML += `<tr><td>` + id + `</td><td><input id='memoContents` + id + `' value='`+ content + `' style='font-size:35px; width:100%'></input></td><td><button value=` + id + `onclick='deleteMemo(` + id + `, ` + year + `, ` + month + `, ` + day + `)'>Delete</button></td> <td><button value=` + id + ` onclick='editMemo(value, ${memoDate})'>Edit</button></td> </tr>`;
             });
             // 최종적으로 모든 메모를 화면에 표시
            memoHTML += `</table> <button onclick="saveMemo(${year}, ${month}, ${day})">다이어리 추가</button> 
@@ -117,10 +117,9 @@ function calendarMaker(target, date) {
 				response.forEach(function(checklist) {
 					let status = checklist.checkStatus;
 					let id = checklist.checkId;
-					let date = checklist.checkDate;
 					let content = checklist.checkContents;
-
-					checklistHTML += "<tr><td><input id='checkBox" + id + "' type='checkbox' " + (status ? "checked" : "unchecked") + "></td><td>" + id + "</td><td id='checklistDate" + id + "'>"+ date + "</td><td><input id='checklistContents" + id + "' value='" + content + "' style='font-size:35px'></input></td><td><button id=" + id + " onclick='deleteChecklist(" + id + ", " + year + ", " + month + ", " + day + ")'>Delete</button></td> <td><button id='" + id + "' onclick='editChecklist(id)'>Edit</button></td></tr>";
+					let checklistDate =`${year} + "-" + ${month} + "-" + ${day}`;
+					checklistHTML += `<tr><td><input id='checkBox` + id + `' type='checkbox' ` + (status ? "checked" : "unchecked") + `></td><td>` + id + `</td><td><input id='checklistContents` + id + `' value='` + content + `' style='font-size:35px'></input></td><td><button id=` + id + ` onclick='deleteChecklist(` + id + `, ` + year + `, ` + month + `, ` + day + `)'>Delete</button></td> <td><button id='` + id + `' onclick='editChecklist(id, ${checklistDate})'>Edit</button></td></tr>`;
 				})
 				// 최종적으로 모든 메모를 화면에 표시
 				checklistHTML += `</table> <button onclick="saveChecklist(${year}, ${month}, ${day})">체크리스트 추가</button>
