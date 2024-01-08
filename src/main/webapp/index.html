@@ -48,10 +48,10 @@
 			let contentsId = `memoContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
 			let insertQueryString = `memoId=${id}&memoDate=${memoDate}&memoContents=${contentsValue}`;
-			alert(insertQueryString);
+			
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert(this.responseText);
+				alert("수정되었습니다");
 			};
 			xhttp.open("POST", "memoUpdate");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -106,10 +106,10 @@
 			let checkBoxValue = document.getElementById(checkBoxId).checked;
 			
 			let insertQueryString = `checkId=${id}&checkDate=${checklistDate}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
-			alert(insertQueryString);
+			
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
-				alert(this.responseText);
+				alert("수정되었습니다");
 			};
 			xhttp.open("POST", "updateChecklist");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
