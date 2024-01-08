@@ -45,12 +45,9 @@
 
 		}
 		function editMemo(id, memoDate) {
-			alert(memo_date);
 			let contentsId = `memoContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
-			let dateId = `date${id}`;
-			let dateValue = document.getElementById(dateId).childNodes[0].nodeValue;
-			let insertQueryString = `memoId=${id}&memoDate=${dateValue}&memoContents=${contentsValue}`;
+			let insertQueryString = `memoId=${id}&memoDate=${memoDate}&memoContents=${contentsValue}`;
 			alert(insertQueryString);
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
@@ -71,7 +68,7 @@
         	            </tr>
         	            <tr>
         	                <td colspan="2">
-        	                    <button onclick="memoInsert()">추가</button>
+        	                    <button onclick="memoInsert(${year}, ${month}, ${day})">추가</button>
         	                    <input type="reset" value="취소">
         	                </td>
         	            </tr>
