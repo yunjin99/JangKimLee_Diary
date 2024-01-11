@@ -16,7 +16,7 @@
 		<div class="v1_11"></div>
 		<span class="v1_13">FISA님의 다이어리🖤</span>
 		<div class="v8_22"></div>
-		<div class="v8_23" id="checklist"></div>
+		<div class="v8_23" id="checkList"></div>
 		<div class="v8_25" id="memo"></div>
 		<span class="v8_26">체크리스트</span> <span class="v13_29">달력</span> <span
 			class="v8_27">다이어리</span>
@@ -87,47 +87,36 @@
 		    xhttp.send(insertQueryString);
 		}
 		
-		function deleteChecklist(id, year, month, day) {
+		
+		function deleteCheckList(id, year, month, day) {
 			var xhttp = new XMLHttpRequest();
 			alert("삭제되었습니다");
 			
-			const url = "deleteChecklist?id=" + id;
+			const url = "checkListDelete?id=" + id;
 			xhttp.open("GET", url, true);
 			xhttp.send();
 			// 삭제 후 페이지를 다시 로드
 		    setTimeout(function() {
-		    	fetchChecklistByDate(year, month, day);
+		    	fetchCheckListByDate(year, month, day);
 		    }, 1000); // 1초 딜레이
 		}
-		function editChecklist(id, checklistDate) {
-			let contentsId = `checklistContents${id}`;
+		function editCheckList(id, checkListDate) {
+			let contentsId = `checkListContents${id}`;
 			let contentsValue = document.getElementById(contentsId).value;
 			let checkBoxId = `checkBox${id}`;
 			let checkBoxValue = document.getElementById(checkBoxId).checked;
 			
-			let insertQueryString = `checkId=${id}&checkDate=${checklistDate}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
+			let insertQueryString = `checkId=${id}&checkDate=${checkListDate}&checkContents=${contentsValue}&checkStatus=${checkBoxValue}`;
 			
 			const xhttp = new XMLHttpRequest();		
 			xhttp.onload = function() {			
 				alert("수정되었습니다");
 			};
-			xhttp.open("POST", "updateChecklist");
+			xhttp.open("POST", "checkListUpdate");
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(insertQueryString);
 		}
-        function deleteChecklist(id, year, month, day) {
-			var xhttp = new XMLHttpRequest();
-			alert("삭제되었습니다");
-			
-			const url = "deleteChecklist?id=" + id;
-			xhttp.open("GET", url, true);
-			xhttp.send();
-			// 삭제 후 페이지를 다시 로드
-		    setTimeout(function() {
-		    	fetchChecklistByDate(year, month, day);
-		    }, 1000); // 1초 딜레이
-		}
-function saveChecklist(year, month, day){
+function saveCheckList(year, month, day){
 	let insertUI = `
         <table border="1" style="font-size:30px">
             <tr>
@@ -141,21 +130,21 @@ function saveChecklist(year, month, day){
             </tr>
             <tr>
                 <td colspan="2">
-                    <button onclick="checklistInsert()">추가</button>
+                    <button onclick="checkListInsert()">추가</button>
                     <input type="reset" value="취소">
                 </td>
             </tr>
         </table>`;
-    document.getElementById("insertUiChecklistView").innerHTML = insertUI;
+    document.getElementById("insertUiCheckListView").innerHTML = insertUI;
 		}
-		function checklistInsert(year, month, day){
+		function checkListInsert(year, month, day){
 			let insertQueryString = `checkStatus=${document.getElementById("status").checked}&checkDate=${document.getElementById("date").value}&checkContents=${document.getElementById("contents").value}`;
 		    const xhttp = new XMLHttpRequest();
 		    xhttp.onload = function() {
 		        alert("추가되었습니다");
-		        fetchChecklistByDate(selectedYear, selectedMonth, selectedDay);
+		        fetchCheckListByDate(selectedYear, selectedMonth, selectedDay);
 		    };
-		    xhttp.open("POST", "insertChecklist");
+		    xhttp.open("POST", "checkListInsert");
 		    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		    xhttp.send(insertQueryString);
 		}

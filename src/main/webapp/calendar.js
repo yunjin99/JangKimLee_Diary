@@ -109,9 +109,9 @@ function calendarMaker(target, date) {
 		});
 	}
 
-	window.fetchChecklistByDate = function(year, month, day) {
+	window.fetchCheckListByDate = function(year, month, day) {
 		console.log("fetchMemoByDate 호출 " + year + '-' + month + '-' + day);
-		var apiUrl = 'checklistByDate?date=' + year + '-' + month + '-' + day;
+		var apiUrl = 'checkListByDate?date=' + year + '-' + month + '-' + day;
 		// AJAX를 사용하여 API 호출
 		$.ajax({
 			url: apiUrl,
@@ -120,18 +120,18 @@ function calendarMaker(target, date) {
 			cache: false,
 			success: function(response) {
 				console.log('서버 응답 데이터:', response);
-				var checklistHTML = "<br><table style='width:100%; font-size: 30px;'>";
-				response.forEach(function(checklist) {
-					let status = checklist.checkStatus;
-					let id = checklist.checkId;
-					let content = checklist.checkContents;
-					let checklistDate = `${year} + "-" + ${month} + "-" + ${day}`;
-					checklistHTML += `<tr><td><input id='checkBox` + id + `' type='checkbox' ` + (status ? "checked" : "unchecked") + `></td><td><input id='checklistContents` + id + `' value='` + content + `' style='font-size:35px; width:100%'></input></td><td><button id=` + id + ` onclick='deleteChecklist(` + id + `, ` + year + `, ` + month + `, ` + day + `)'>Delete</button></td> <td><button id='` + id + `' onclick='editChecklist(id, ${checklistDate})'>Edit</button></td></tr>`;
+				var checkListHTML = "<br><table style='width:100%; font-size: 30px;'>";
+				response.forEach(function(checkList) {
+					let status = checkList.checkStatus;
+					let id = checkList.checkId;
+					let content = checkList.checkContents;
+					let checkListDate = `${year} + "-" + ${month} + "-" + ${day}`;
+					checkListHTML += `<tr><td><input id='checkBox` + id + `' type='checkbox' ` + (status ? "checked" : "unchecked") + `></td><td><input id='checkListContents` + id + `' value='` + content + `' style='font-size:35px; width:100%'></input></td><td><button id=` + id + ` onclick='deleteCheckList(` + id + `, ` + year + `, ` + month + `, ` + day + `)'>Delete</button></td> <td><button id='` + id + `' onclick='editCheckList(id, ${checkListDate})'>Edit</button></td></tr>`;
 				})
 				// 최종적으로 모든 메모를 화면에 표시
-				checklistHTML += `</table> <button onclick="saveChecklist(${year}, ${month}, ${day})">체크리스트 추가</button>
-		<div id='insertUiChecklistView'></div>`;
-				updateCheckView(checklistHTML);
+				checkListHTML += `</table> <button onclick="saveCheckList(${year}, ${month}, ${day})">체크리스트 추가</button>
+		<div id='insertUiCheckListView'></div>`;
+				updateCheckView(checkListHTML);
 			},
 			error: function(error) {
 				console.error('API 호출 에러:', error);
@@ -145,8 +145,8 @@ function calendarMaker(target, date) {
 	}
 
 	// 화면 갱신을 담당하는 함수
-	function updateCheckView(checklistHTML) {
-		document.getElementById("checklist").innerHTML = checklistHTML;
+	function updateCheckView(checkListHTML) {
+		document.getElementById("checkList").innerHTML = checkListHTML;
 	}
 
 	function calMoveEvtFn() {
@@ -168,7 +168,7 @@ function calendarMaker(target, date) {
 			selectedMonth = nowDate.getMonth() + 1;
 			selectedDay = $(this).text();
 			fetchMemoByDate(selectedYear, selectedMonth, selectedDay);
-			fetchChecklistByDate(selectedYear, selectedMonth, selectedDay);
+			fetchCheckListByDate(selectedYear, selectedMonth, selectedDay);
 		});
 	}
 }
