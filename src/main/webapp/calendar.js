@@ -96,7 +96,7 @@ function calendarMaker(target, date) {
 						<button class="edit" value=` + id + ` onclick='editMemo(value, ${memoDate})'>Edit</button></td> </tr>`;*/
 						memoHTML += `<tr><td><input id='memoContents${id}' value='${content}' style='font-size:35px; width:100%'></input></td><td>
     <button class="delete" value="${id}" onclick='deleteMemo(${id}, ${year}, ${month}, ${day})'>Delete</button></td> <td>
-    <button class="edit" value="${id}" onclick='editMemo(${id}, "${memoDate}")'>Edit</button></td> </tr>`;
+    <button class="edit" value="${id}" onclick='editMemo(${id}, ${memoDate})'>Edit</button></td> </tr>`;
 				});
 				// 최종적으로 모든 메모를 화면에 표시
 				memoHTML += `</table> <button onclick="saveMemo(${year}, ${month}, ${day})">다이어리 추가</button> 
