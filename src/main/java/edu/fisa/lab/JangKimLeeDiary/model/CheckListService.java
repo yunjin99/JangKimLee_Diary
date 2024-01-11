@@ -32,7 +32,7 @@ public class CheckListService {
 	}
 
 
-	public List<CheckListDTO> getAllCheckList() throws SQLException, NotExistException {
+	public List<CheckListDTO> getAllCheckList() throws Exception {
 		List<CheckList> CheckListAll = CheckListDAO.findAll();
 
 		if (CheckListAll == null || CheckListAll.isEmpty()) {
@@ -55,7 +55,7 @@ public class CheckListService {
 	}
 
 	@Transactional
-	public boolean addCheckList(CheckListDTO CheckList) throws MessageException {
+	public boolean addCheckList(CheckListDTO CheckList) throws Exception {
 		CheckList CheckListEntity = mapper.map(CheckList, CheckList.class); 
 		CheckListEntity = CheckListDAO.save(CheckListEntity); 
 		return true;

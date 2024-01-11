@@ -24,7 +24,7 @@ public class MemoRestController {
 	}
 
 	@GetMapping("/memoFindByDate")
-	public List<MemoDTO> findMemoByDate(@RequestParam("date") String date) throws Exception {
+	public List<MemoDTO> memoFindByDate(@RequestParam("date") String date) throws Exception {
 		return memoService.getFindByDate(date); //json 포멧으로 client의 js 요청 영역으로 출력
 	}
 

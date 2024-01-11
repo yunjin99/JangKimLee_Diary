@@ -12,6 +12,6 @@ import edu.fisa.lab.JangKimLeeDiary.model.entity.CheckList;
 @Repository
 public interface CheckListDAO extends JpaRepository<CheckList, Integer> {
 	
-	@Query("SELECT a FROM Checklist a WHERE a.checkDate = :date")
+	@Query("SELECT a FROM CheckList a WHERE a.checkDate = :date")
 	List<CheckList> findByDate(@Param("date") String date);	
 }

@@ -38,7 +38,7 @@ public class MemoService {
 	}
 
 //	@Transactional
-	public boolean addMemo(MemoDTO memo) throws MessageException {
+	public boolean addMemo(MemoDTO memo) throws Exception {
 		Memo memoEntity = mapper.map(memo, Memo.class); // dto를 entity로 변환
 		memoEntity = memoDAO.save(memoEntity); // db에 insert 또는 update 하는 메소드
 		return true;

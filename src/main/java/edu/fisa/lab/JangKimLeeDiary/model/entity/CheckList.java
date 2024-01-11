@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "checklist")
 @Entity
 public class CheckList {
-
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "check_id")
 	private int checkId;
 
