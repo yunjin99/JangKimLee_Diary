@@ -1,6 +1,5 @@
 package edu.fisa.lab.JangKimLeeDiary.model;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,59 +17,62 @@ import jakarta.transaction.Transactional;
 public class CheckListService {
 
 	@Autowired
-	private CheckListDAO CheckListDAO;
+	private CheckListDAO checkListDAO;
 
 	private ModelMapper mapper = new ModelMapper();
 
-//	check date 값으로 해당 날짜의 checklist 정보 검색 service
-//	entity -> dto로 변환
-	
 	public List<CheckListDTO> getCheckListbyDate(String checkdate) throws Exception {
-		List<CheckList> checkEntity = CheckListDAO.findByDate(checkdate);
+		List<CheckList> checkEntity = checkListDAO.findByDate(checkdate);
 		List<CheckListDTO> checkList = Arrays.asList(mapper.map(checkEntity, CheckListDTO[].class));
 		return checkList;
 	}
 
-
 	public List<CheckListDTO> getAllCheckList() throws Exception {
-		List<CheckList> CheckListAll = CheckListDAO.findAll();
-
-		if (CheckListAll == null || CheckListAll.isEmpty()) {
-			throw new NotExistException("검색하는 체크리스트가 없습니다.");
+		List<CheckList> checkListAll = checkListDAO.findAll();
+		if (checkListAll == null) {
+			throw new NotExistException("고른 날짜의 체크리스트를 불러오는데 실패했습니다.");
 		}
-
-		List<CheckListDTO> CheckListDTOAll = Arrays.asList(mapper.map(CheckListAll, CheckListDTO[].class));
-
-		return CheckListDTOAll;
+		List<CheckListDTO> checkListDTOAll = Arrays.asList(mapper.map(checkListAll, CheckListDTO[].class));
+		return checkListDTOAll;
 	}
 	
-	public void notExistCheckList(Integer CheckListId) throws Exception {
-
-		boolean result = CheckListDAO.existsById(CheckListId);
-
-		if (result != true) {
-			throw new NotExistException("검색하는 체크리스트가 업습니다.");
+	public void notExistCheckList(Integer checkListId) throws Exception {
+		if (!checkListDAO.existsById(checkListId)) {
+			throw new NotExistException("ID에 해당하는 체크리스트가 없습니다.");
 		}
-
 	}
 
 	@Transactional
-	public boolean addCheckList(CheckListDTO CheckList) throws Exception {
-		CheckList CheckListEntity = mapper.map(CheckList, CheckList.class); 
-		CheckListEntity = CheckListDAO.save(CheckListEntity); 
+	public boolean addCheckList(CheckListDTO checkList) throws Exception {
+		try {   
+			checkListDAO.save(mapper.map(checkList, CheckList.class)); 
+		}catch(Exception e){
+			throw new MessageException("체크리스트 삽입에 실패했습니다.");
+		}
 		return true;
 	}
 
 	@Transactional
 	public boolean updateCheckList(CheckListDTO checkList) throws Exception {
-		deleteCheckList(checkList.getCheckId());
-	    addCheckList(checkList);
-	    return true;
+		notExistCheckList(checkList.getCheckId());
+		try{
+			CheckList cl = checkListDAO.findById(checkList.getCheckId()).get();
+			cl.setCheckContents(checkList.getCheckContents());
+			cl.setCheckStatus(checkList.isCheckStatus());
+		} catch(Exception e) {
+			throw new MessageException("체크리스트 수정에 실패했습니다.");
+		}
+		return true;
 	}
 
-	public boolean deleteCheckList(Integer CheckListId) throws Exception {
-		notExistCheckList(CheckListId);
-		CheckListDAO.deleteById(CheckListId);
+	@Transactional
+	public boolean deleteCheckList(Integer checkListId) throws Exception {
+		notExistCheckList(checkListId);
+		try {
+			checkListDAO.deleteById(checkListId);
+		} catch(Exception e) {
+			throw new MessageException("체크리스트 삭제에 실패했습니다.");
+		}
 		return true;
 	}
 

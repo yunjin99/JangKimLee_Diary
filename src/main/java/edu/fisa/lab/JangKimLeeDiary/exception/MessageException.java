@@ -1,4 +1,4 @@
-﻿package edu.fisa.lab.JangKimLeeDiary.exception;
+package edu.fisa.lab.JangKimLeeDiary.exception;
 
 public class MessageException extends Exception {
 	
@@ -8,3 +8,4 @@ public class MessageException extends Exception {
 		super(message);
 	}
 }
+     

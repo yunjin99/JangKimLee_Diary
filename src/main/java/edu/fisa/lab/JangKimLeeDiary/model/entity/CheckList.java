@@ -1,7 +1,5 @@
 package edu.fisa.lab.JangKimLeeDiary.model.entity;
 
-import java.sql.Date;
-
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +19,7 @@ import lombok.Setter;
 @Setter
 @Builder
 
-@Table(name = "checklist")
+@Table(name = "checklist")   
 @Entity
 public class CheckList {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

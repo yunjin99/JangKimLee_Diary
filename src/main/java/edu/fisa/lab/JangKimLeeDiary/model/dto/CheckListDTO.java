@@ -1,4 +1,4 @@
-﻿package edu.fisa.lab.JangKimLeeDiary.model.dto;
+package edu.fisa.lab.JangKimLeeDiary.model.dto;
 
 import edu.fisa.lab.JangKimLeeDiary.model.entity.CheckList;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Builder
 public class CheckListDTO {
 
-	private int checkId;
+	private int checkId;  
 	private String checkDate;
 	private String checkContents;
 	private boolean checkStatus;

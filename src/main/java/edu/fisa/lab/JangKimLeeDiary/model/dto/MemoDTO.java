@@ -1,4 +1,4 @@
-﻿package edu.fisa.lab.JangKimLeeDiary.model.dto;
+package edu.fisa.lab.JangKimLeeDiary.model.dto;
 
 import edu.fisa.lab.JangKimLeeDiary.model.entity.Memo;
 
@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString     
 
 @Builder
 public class MemoDTO {

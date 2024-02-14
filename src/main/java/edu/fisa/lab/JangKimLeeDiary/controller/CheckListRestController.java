@@ -3,6 +3,8 @@ package edu.fisa.lab.JangKimLeeDiary.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,3 +47,12 @@ public class CheckListRestController {
 		return checkListService.deleteCheckList(id);
 	}
 }
+// 예외 
+/*
+ * 	@ExceptionHandler
+	public String exceptionHandler(Exception e, Model m) {
+		m.addAttribute("errorMsg", "발생된 이슈 " + e.getMessage());
+		e.printStackTrace();
+		return "forward:showError.jsp";
+	}
+*/

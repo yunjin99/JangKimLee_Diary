@@ -11,6 +11,7 @@ import edu.fisa.lab.JangKimLeeDiary.exception.MessageException;
 import edu.fisa.lab.JangKimLeeDiary.exception.NotExistException;
 import edu.fisa.lab.JangKimLeeDiary.model.dto.MemoDTO;
 import edu.fisa.lab.JangKimLeeDiary.model.entity.Memo;
+import jakarta.transaction.Transactional;
 
 @Service
 public class MemoService {
@@ -20,7 +21,6 @@ public class MemoService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	// 메모 날짜로 검색 service
 	public List<MemoDTO> getFindByDate(String date) throws Exception {
 		List<Memo> memoEntity = memoDAO.memoByDate(date);
 		List<MemoDTO> memo = Arrays.asList(mapper.map(memoEntity, MemoDTO[].class));
@@ -29,32 +29,48 @@ public class MemoService {
 
 	public List<MemoDTO> getAllMemo() throws Exception {
 		List<Memo> memoAll = memoDAO.findAll();
-
 		if (memoAll == null) {
-			throw new NotExistException("메모가 존재하지 않습니다");
+			throw new NotExistException("고른 날짜의 메모를 불러오는데 실패했습니다");
 		}
 		List<MemoDTO> memoDTOAll = Arrays.asList(mapper.map(memoAll, MemoDTO[].class));
 		return memoDTOAll;
 	}
+	
+	public void notExistMemo(Integer memoId) throws Exception {
+		if (!memoDAO.existsById(memoId)) {
+			throw new NotExistException("검색하는 체크리스트가 업습니다.");
+		}
+	}
 
-//	@Transactional
+	@Transactional
 	public boolean addMemo(MemoDTO memo) throws Exception {
-		Memo memoEntity = mapper.map(memo, Memo.class); // dto를 entity로 변환
-		memoEntity = memoDAO.save(memoEntity); // db에 insert 또는 update 하는 메소드
+		try {
+			memoDAO.save(mapper.map(memo, Memo.class));
+		} catch(Exception e) {
+			throw new MessageException("메모 삽입에 실패했습니다.");
+		}
 		return true;
 	}
-
+    
+	@Transactional
 	public boolean deleteMemo(int memoId) throws Exception {
-//		notExistActivist(memoId);
-		memoDAO.deleteById(memoId);
-//		if(!result){
-//			throw new NotExistException("재능 기부자 정보 삭제 실패");
-//		}
+		notExistMemo(memoId);
+		try {
+			memoDAO.deleteById(memoId);
+		} catch(Exception e) {
+			throw new MessageException("메모 삭제에 실패했습니다.");
+		}
 		return true;
 	}
+	
+	@Transactional
 	public boolean updateMemo(MemoDTO memo) throws Exception{
-		deleteMemo(memo.getMemoId());
-		addMemo(memo);
+		notExistMemo(memo.getMemoId());
+		try {
+			memoDAO.findById(memo.getMemoId()).get().setMemoContents(memo.getMemoContents());
+		} catch(Exception e) {
+			throw new MessageException("메모 수정에 실패했습니다.");
+		}
 		return true;
 	}
 }

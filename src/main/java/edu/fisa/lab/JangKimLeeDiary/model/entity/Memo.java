@@ -1,8 +1,5 @@
 package edu.fisa.lab.JangKimLeeDiary.model.entity;
 
-import java.sql.Date;
-
-import jakarta.annotation.Generated;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
+@RequiredArgsConstructor     
 @Builder
 
 @Table(name = "memo")
@@ -29,7 +26,7 @@ import lombok.Setter;
 public class Memo {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "memo_id")
+//	@Column(name = "memo_id")
 	private int memoId;
 
 	@Nonnull
