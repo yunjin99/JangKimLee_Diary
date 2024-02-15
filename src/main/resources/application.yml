@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 7777
   servlet:
     context-path: /diary
     
@@ -7,7 +7,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: user01
-    url: jdbc:mysql://mysqldb:3306/fisa?characterEncoding=UTF-8 
+    url: jdbc:mysql://127.0.0.1:3306/fisa?characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: user01
   jpa:
     database: mysql
